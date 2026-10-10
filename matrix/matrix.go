@@ -6,19 +6,23 @@ import (
 
 
 type DenseMatrix struct {
-	w,h int
 	_data []float32
+	w,h int
 }
 
-func makeDenseMatrix(w int, h int, data []float32) DenseMatrix {
-	return DenseMatrix{w, h, data}
+func NewDenseMatrix(data []float32, w int, h int) DenseMatrix {
+	return DenseMatrix{data, w, h}
 }
 
-func (m DenseMatrix)print() {
+func (m *DenseMatrix) Print() {
 	for i := 0; i < m.h; i++ {
 		for j := 0; j < m.w; j++ {
 			fmt.Printf("%f ", m._data[j + m.w*i])
 		}
+		fmt.Printf("\n")
 	}
 }
 
+func DoSomething() {
+	fmt.Printf("Hello World!")
+}

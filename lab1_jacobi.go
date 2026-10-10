@@ -4,7 +4,8 @@ import (
     "fmt"
 	// "rand"
 	// "gonum.org/v1/gonum/mat"
-	"github.com/Torsh/mii/matrix"
+	"github.com/Torsh41/mii/matrix"
+	// . "matrix"
 )
 
 // TODO:
@@ -17,12 +18,20 @@ import (
 
 func main() {
     fmt.Println("HelloWorld!")
-	a := makeDenseMatrix(5, 5, []float32{
+	// a := matrix.DenseMatrix{[]float32{
+	// 	1,2,3,4,5,
+	// 	6,7,8,9,10,
+	// 	11,12,13,14,15,
+	// 	16,17,18,19,20,
+	// 	21,22,23,24,25,
+	// }, 5, 5}
+	matrix.DoSomething()
+	a := matrix.NewDenseMatrix([]float32{
 		1,2,3,4,5,
 		6,7,8,9,10,
 		11,12,13,14,15,
 		16,17,18,19,20,
 		21,22,23,24,25,
-	})
-	a.print()
+	}, 5, 5)
+	a.Print()
 }
