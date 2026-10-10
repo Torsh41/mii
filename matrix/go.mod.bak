@@ -1,0 +1,5 @@
+module com/matrix
+go 1.26.6
+
+require (
+)
