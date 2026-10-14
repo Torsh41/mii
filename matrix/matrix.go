@@ -7,7 +7,7 @@ package matrix
 // - Add/Mul by number
 // - Module description (a doc.go file?)
 
-type DType float32;
+type DType = float64;
 
 // NewDenseCopy of gonum.mat.Matrix
 type Matrix interface {
