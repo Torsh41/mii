@@ -61,3 +61,51 @@ func Mul(a, b Matrix) (c Matrix) {
 // }
 //
 //
+
+func AddScalar(a Matrix, b DType) (c Matrix) {
+	rows, cols := a.Dims()
+	if arm, ok := a.(*Dense); ok {
+		c = NewDenseZeros(rows, cols)
+		crm, _ := c.(*Dense)
+		for i := range rows*cols {
+			crm.data[i] = arm.data[i] + b
+		}
+		return c;
+	}
+	return nil
+}
+
+
+func MulScalar(a Matrix, b DType) (c Matrix) {
+	rows, cols := a.Dims()
+	if arm, ok := a.(*Dense); ok {
+		c = NewDenseZeros(rows, cols)
+		crm, _ := c.(*Dense)
+		for i := range rows*cols {
+			crm.data[i] = arm.data[i] * b
+		}
+		return c;
+	}
+	return nil
+}
+
+
+// Multiply two matricies element by element
+func MulElem(a, b Matrix) (c Matrix) {
+	ar, ac := a.Dims()
+	br, bc := b.Dims()
+	if ar != br || ac != bc {
+		panic(ErrShape)
+	}
+	if arm, ok := a.(*Dense); ok {
+		if brm, ok := b.(*Dense); ok {
+			c = NewDenseZeros(ar, ac)
+			crm, _ := c.(*Dense)
+			for i := range ar*ac {
+				crm.data[i] = arm.data[i] * brm.data[i]
+			}
+			return c;
+		}
+	}
+	return nil
+}

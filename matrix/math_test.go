@@ -82,3 +82,6 @@ func TestInv(t *testing.T) {
 }
 
 
+func TestAddScalar(t *testing.T) { }
+
+func TestMulScalar(t *testing.T) { }
