@@ -62,3 +62,49 @@ func TestEigenJacobi(t *testing.T) {
 		}
 	}
 }
+
+func TestEigen2x2(t *testing.T) {
+	t.Parallel()
+    for id, test := range []struct {
+		A, L, V Matrix
+	}{
+		{
+			NewDense(2, 2, []DType{
+				4, 3,
+				-2, -3,
+			}),
+			NewDense(2, 2, []DType{
+				-2, 0,
+				0, 3,
+			}),
+			NewDense(2, 2, []DType{
+				1, 3,
+				-2, -1,
+			}),
+		},
+		{
+			NewDense(2, 2, []DType{
+				2, 1,
+				1, 2,
+			}),
+			NewDense(2, 2, []DType{
+				1, 0,
+				0, 3,
+			}),
+			NewDense(2, 2, []DType{
+				-1, 1,
+				1, 1,
+			}),
+		},
+    } {
+		eigenval, eigenvec := Eigen(test.A)
+		if !matrixEqual(eigenval, test.L) {
+			t.Errorf("eigenvalues don't match in test %d: got: %v want: %v",
+					id, eigenval, test.L)
+		}
+		if !matrixEqual(eigenvec, test.V) {
+			t.Errorf("eigenvectors don't match in test %d: got: %v want: %v",
+					id, eigenvec, test.V)
+		}
+	}
+}

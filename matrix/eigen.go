@@ -10,7 +10,29 @@ var eps = 1e-6
 // Also find eigenvectors, and stores them in V.
 // Might panic, sometimes.
 func Eigen(a Matrix) (L, V Matrix) {
-	return eigenJacobi(a)
+	rows, cols := a.Dims()
+	if rows == 2 && cols == 2 {
+		return eigen2x2(a)
+	}
+	if isSymetrical(a) {
+		return eigenJacobi(a)
+	}
+	return nil, nil
+}
+
+func isSymetrical(a Matrix) bool {
+	rows, cols := a.Dims()
+	if rows != cols {
+		return false
+	}
+	for i := 1; i < rows; i++ {
+		for j := i + 1; j < cols; j++ {
+			if a.At(i, j) != a.At(j, i) {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 
@@ -163,3 +185,24 @@ func eigenJacobi2(a Matrix) (L, V Matrix) {
 	}
 	return a1, V
 }
+
+
+func eigen2x2(A Matrix) (L, V Matrix) {
+	rows, cols := A.Dims()
+	if rows != 2 && cols != 2 {
+		return nil, nil
+	}
+	b := - (A.At(0,0) + A.At(1,1))
+	c := A.At(0,0) * A.At(1,1) - A.At(1,0) * A.At(0,1)
+	D := b*b - 4*c
+	L = NewDense(2, 2, []DType{
+		0.5 * (- b - math.Sqrt(D)), 0,
+		0, 							0.5 * (- b + math.Sqrt(D)),
+	})
+	V = NewDense(2, 2, []DType{
+		A.At(0, 0) - L.At(1, 1), 	A.At(0, 1),
+		A.At(1, 0), 				A.At(1, 1) - L.At(0, 0),
+	})
+	return L, V
+}
+
